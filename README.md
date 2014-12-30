@@ -1,4 +1,4 @@
 ArnesRacing
 ===========
 
-Arcade-racing game written in LUA
+Arcade racing game written in LUA
