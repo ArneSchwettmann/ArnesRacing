@@ -1,4 +1,4 @@
-ArnesRacing
+Arne's Racing
 ===========
 
 Arcade racing game written in LUA
