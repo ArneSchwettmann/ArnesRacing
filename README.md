@@ -8,7 +8,7 @@ This is a version of a classic arcade racing game game written by Arne Schwettma
 Currently, it is only a road and some objects on the side of the road.
 Cursor keys to accelerate decelerate and move left/right, z/x creates curves (press keys many times.)
 
-To compile from source under Windows, simply drag the src directory onto Love.exe version 0.9.1. For more information on LÖVE, visit love2d.org.
+Pre-compiled executables for Windows and OSX are in the bin directory. To compile from source under Windows, simply drag the src directory onto Love.exe version 0.9.1. For more information on LÖVE, visit love2d.org.
 
 See License.txt for licensing details
 
