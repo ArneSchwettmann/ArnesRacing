@@ -1,1 +1,7 @@
-{"name":"Arnesracing","tagline":"Arcade-racing game written in LUA","body":"### Welcome to Arne's Racing\r\n\r\nThis is a classic Arcade style racing game written in LUA/LÖVE.\r\n\r\n##Screenshots\r\n\r\n![Arne's Racing - Ingame](http://www.arneschwettmann.com/delme/screenshots/ArnesRacing_shot1.jpg)","google":"UA-58047154-3","note":"Don't delete this file! It's used internally to help with page regeneration."}
+{
+  "name": "Arnesracing",
+  "tagline": "Arcade-racing game written in LUA",
+  "body": "Arne's Racing\r\n===========\r\n\r\nArcade racing game written in LUA\r\n\r\nThis is a version of a classic arcade racing game game written by Arne Schwettmann in LUA, making use of the LÖVE game framework and pixel shaders. It is written for LÖVE 0.9.1.\r\n\r\nCurrently, it is only a road and some objects on the side of the road.\r\nCursor keys to accelerate decelerate and move left/right, z/x creates curves (press keys many times.)\r\n\r\nPre-compiled executables for Windows and OSX are in the bin directory. To compile from source under Windows, simply drag the src directory onto Love.exe version 0.9.1. For more information on LÖVE, visit love2d.org.\r\n\r\nSee License.txt for licensing details\r\n\r\nWritten by Arne Schwettmann\r\n\r\n\r\n##Screenshots\r\n\r\n![Arne's Racing - Ingame](http://www.arneschwettmann.com/delme/screenshots/ArnesRacing_shot1.jpg)\r\n",
+  "google": "UA-58047154-3",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
