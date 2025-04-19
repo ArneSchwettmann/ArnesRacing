@@ -7,11 +7,11 @@ function love.load()
    rasterRoadHeight = rasterRoad1:getHeight()
    screenWidth = 512
    screenHeight = 512
-	horizonHeight = 320
-	fixPointYOffset = 10
+   horizonHeight = 320
+   fixPointYOffset = 10
       
    
-   roadShader=love.graphics.newShader(
+   roadShader=love.graphics.newShader
    [[
       extern Image rasterRoad1;
       extern Image rasterRoad2;
@@ -21,34 +21,36 @@ function love.load()
       extern number curveX;
       extern number rasterRoadWidth;
       extern number screenWidth;
-		extern number horizonHeight;
-		extern number fixPointYOffset;
+      extern number screenHeight;
+      extern number horizonHeight;
+      extern number fixPointYOffset;
 		
       vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
       {
-			int index=int(screen_coords.y);
+         float screenY=screenHeight-screen_coords.y;
+         int index=int(screenY);
          int a=int(index/256);
-			int b=int(mod(index,256));
-			float z = (zMap[b])[a];			
+         int b=int(mod(index,256));
+         float z = (zMap[b])[a];			
 			
-			float xCoord=screen_coords.x-x*screenWidth*(1-screen_coords.y/horizonHeight)-curveX*z*screenWidth;
+         float xCoord=screen_coords.x-x*screenWidth*(1-screenY/horizonHeight)-curveX*z*screenWidth;
          float xOffset=(rasterRoadWidth-screenWidth)/2;
          float xFactor=1/rasterRoadWidth;
          float texelX=(xCoord+xOffset)*xFactor;
-			float texelY=1-screen_coords.y/(horizonHeight+fixPointYOffset);
-			if (texelX>1) texelX=1;
-			if (texelX<0) texelX=0;
+         float texelY=1-screenY/(horizonHeight+fixPointYOffset);
+         if (texelX>1) texelX=1;
+         if (texelX<0) texelX=0;
          if (texelY>1) texelY=1;
-			if (texelY<0) texelY=0;
+         if (texelY<0) texelY=0;
          vec4 texcolor = Texel(rasterRoad1,vec2(texelX,texelY));
          if (mod(z+zOffset,1)<=0.5) 
-            texcolor = Texel(rasterRoad2,vec2(texelX,texelY));
-         if (screen_coords.y>horizonHeight)
-            texcolor = vec4(0,0,1,1);
+         texcolor = Texel(rasterRoad2,vec2(texelX,texelY));
+         if (screenY>horizonHeight)
+         texcolor = vec4(0,0,1,1);
          return texcolor;
       }
    ]]
-   )
+   
    zMap = calculateZMap(-horizonHeight,horizonHeight,screenHeight)
    zOffset=0
    vZ=0
@@ -74,34 +76,32 @@ function love.load()
    roadShader:send("rasterRoad2",rasterRoad2)
    roadShader:send("rasterRoadWidth",rasterRoadWidth)
    roadShader:send("screenWidth",screenWidth)
+   roadShader:send("screenHeight",screenHeight)
    zMapVec={}
-	for i=1,256 do
-		zMapVec[i]={0,0,0,0}
-	end
-	for i=1,256 do
-		for a=1,4 do
-			zMapVec[i][a]=0
-		end
-	end
+   for i=1,256 do
+      zMapVec[i]={0,0,0,0}
+   end
+   for i=1,256 do
+      for a=1,4 do
+         zMapVec[i][a]=0
+      end
+   end
 	
-	for i=1,screenHeight do
-		a=math.floor((i-1)/256)+1
-		b=math.floor((i-1)%256)+1
-		zMapVec[b][a]=zMap[i]
-	end
-	roadShader:send("zMap",unpack(zMapVec))
-	roadShader:send("zOffset",zOffset)
+   for i=1,screenHeight do
+      a=math.floor((i-1)/256)+1
+      b=math.floor((i-1)%256)+1
+      zMapVec[b][a]=zMap[i]
+   end
+   roadShader:send("zMap",unpack(zMapVec))
+   roadShader:send("zOffset",zOffset)
    roadShader:send("x",x)
    roadShader:send("curveX",curveX)
    roadShader:send("horizonHeight",horizonHeight)
-	roadShader:send("fixPointYOffset",fixPointYOffset)
-	
-
-	
+   roadShader:send("fixPointYOffset",fixPointYOffset)	
 --   rectZ=-640/((640-rectY)-700)
 end
 
- function unpack (t, i)
+function unpack (t, i)
       i = i or 1
       if t[i] ~= nil then
         return t[i], unpack(t, i + 1)
